@@ -30,7 +30,7 @@ import {PageAside} from './PageAside'
 import {Footer} from './Footer'
 import {NotionPageHeader} from './NotionPageHeader'
 import {GitHubShareButton} from './GitHubShareButton'
-import {OutterEmbed} from './OutterEmbed'
+import {OuterEmbed} from './OuterEmbed'
 
 import styles from './styles.module.css'
 
@@ -345,7 +345,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
         footer={footer}
       />
       
-      <OutterEmbed
+      <OuterEmbed
         html_string={head_html}
       />
     </>
