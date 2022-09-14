@@ -218,12 +218,10 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
   const title = getBlockTitle(block, recordMap) || site.name
   let head_html = "";
-  const code: React.ReactChild = (
+  let code: React.ReactChild = (
     <NotionRenderer
       recordMap={recordMap}
-      components={{
-        code: Code,
-      }}
+      components={components}
     />
   )
 
