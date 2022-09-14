@@ -4,6 +4,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 module.exports = withBundleAnalyzer({
+  staticPageGenerationTimeout: 300,
   images: {
     domains: [
       'www.notion.so',
@@ -16,8 +17,6 @@ module.exports = withBundleAnalyzer({
     ],
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    loader: 'akamai',
-    path: '',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;"
   }
 })
