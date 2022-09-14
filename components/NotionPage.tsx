@@ -3,33 +3,34 @@ import Link from 'next/link'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import cs from 'classnames'
-import { useRouter } from 'next/router'
-import { useSearchParam } from 'react-use'
+import {useRouter} from 'next/router'
+import {useSearchParam} from 'react-use'
 import BodyClassName from 'react-body-classname'
-import { PageBlock } from 'notion-types'
+import {PageBlock} from 'notion-types'
 
 import TweetEmbed from 'react-tweet-embed'
 
 // core notion renderer
-import { NotionRenderer } from 'react-notion-x'
+import {NotionRenderer} from 'react-notion-x'
 
 // utils
-import { getBlockTitle, getPageProperty, formatDate } from 'notion-utils'
-import { mapPageUrl, getCanonicalPageUrl } from 'lib/map-page-url'
-import { mapImageUrl } from 'lib/map-image-url'
-import { searchNotion } from 'lib/search-notion'
-import { useDarkMode } from 'lib/use-dark-mode'
+import {getBlockTitle, getPageProperty, formatDate} from 'notion-utils'
+import {mapPageUrl, getCanonicalPageUrl} from 'lib/map-page-url'
+import {mapImageUrl} from 'lib/map-image-url'
+import {searchNotion} from 'lib/search-notion'
+import {useDarkMode} from 'lib/use-dark-mode'
 import * as types from 'lib/types'
 import * as config from 'lib/config'
 
 // components
-import { Loading } from './Loading'
-import { Page404 } from './Page404'
-import { PageHead } from './PageHead'
-import { PageAside } from './PageAside'
-import { Footer } from './Footer'
-import { NotionPageHeader } from './NotionPageHeader'
-import { GitHubShareButton } from './GitHubShareButton'
+import {Loading} from './Loading'
+import {Page404} from './Page404'
+import {PageHead} from './PageHead'
+import {PageAside} from './PageAside'
+import {Footer} from './Footer'
+import {NotionPageHeader} from './NotionPageHeader'
+// import {GitHubShareButton} from './GitHubShareButton'
+import {OuterEmbed} from './OuterEmbed'
 
 import styles from './styles.module.css'
 
@@ -102,12 +103,12 @@ const Modal = dynamic(
   }
 )
 
-const Tweet = ({ id }: { id: string }) => {
-  return <TweetEmbed tweetId={id} />
+const Tweet = ({id}: { id: string }) => {
+  return <TweetEmbed tweetId={id}/>
 }
 
 const propertyLastEditedTimeValue = (
-  { block, pageHeader },
+  {block, pageHeader},
   defaultFn: () => React.ReactNode
 ) => {
   if (pageHeader && block?.last_edited_time) {
@@ -120,7 +121,7 @@ const propertyLastEditedTimeValue = (
 }
 
 const propertyDateValue = (
-  { data, schema, pageHeader },
+  {data, schema, pageHeader},
   defaultFn: () => React.ReactNode
 ) => {
   if (pageHeader && schema?.name?.toLowerCase() === 'published') {
@@ -137,7 +138,7 @@ const propertyDateValue = (
 }
 
 const propertyTextValue = (
-  { schema, pageHeader },
+  {schema, pageHeader},
   defaultFn: () => React.ReactNode
 ) => {
   if (pageHeader && schema?.name?.toLowerCase() === 'author') {
@@ -148,11 +149,11 @@ const propertyTextValue = (
 }
 
 export const NotionPage: React.FC<types.PageProps> = ({
-  site,
-  recordMap,
-  error,
-  pageId
-}) => {
+                                                        site,
+                                                        recordMap,
+                                                        error,
+                                                        pageId
+                                                      }) => {
   const router = useRouter()
   const lite = useSearchParam('lite')
 
@@ -177,7 +178,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
   // lite mode is for oembed
   const isLiteMode = lite === 'true'
 
-  const { isDarkMode } = useDarkMode()
+  const {isDarkMode} = useDarkMode()
 
   const siteMapPageUrl = React.useMemo(() => {
     const params: any = {}
@@ -200,22 +201,77 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
   const pageAside = React.useMemo(
     () => (
-      <PageAside block={block} recordMap={recordMap} isBlogPost={isBlogPost} />
+      <PageAside block={block} recordMap={recordMap} isBlogPost={isBlogPost}/>
     ),
     [block, recordMap, isBlogPost]
   )
 
-  const footer = React.useMemo(() => <Footer />, [])
+  const footer = React.useMemo(() => <Footer/>, [])
 
   if (router.isFallback) {
-    return <Loading />
+    return <Loading/>
   }
 
   if (error || !site || !block) {
-    return <Page404 site={site} pageId={pageId} error={error} />
+    return <Page404 site={site} pageId={pageId} error={error}/>
   }
 
   const title = getBlockTitle(block, recordMap) || site.name
+  let head_html = "";
+  const code: React.ReactChild = (
+    <NotionRenderer
+      recordMap={recordMap}
+      components={components}
+    />
+  )
+
+  Object.entries(code.props.recordMap.block).map(([id, value]) => {
+    console.log(id, '=', value)
+
+    let current_value: any = (value as any);
+    console.log('(before)', id, '=', current_value)
+    if (current_value.role === 'none') return;
+    if (current_value.value != undefined) {
+      current_value = current_value.value;
+    }
+
+    if (current_value.type === 'code' && current_value.properties.language[0][0] === 'BASIC') {
+      console.log('converting...');
+
+      console.log(current_value.properties.language);
+
+
+      current_value.type = 'embed';
+      const embed_size = current_value.properties.caption[0][0].split(',');
+      Object.assign(current_value, {
+        format: {
+          block_width: Number(embed_size[0]),
+          block_height: Number(embed_size[1]),
+        }
+      })
+      current_value.properties.title.unshift(['data:text/html;charset=utf-8,']);
+      current_value.properties = {source: [[current_value.properties.title.join('')]]};
+
+      console.log('(after)', id, '=', current_value)
+    }
+
+    if (current_value.type === 'code' && current_value.properties.language[0][0] === 'Visual Basic') {
+      console.log('converting...');
+
+      const context = current_value.properties.title.join();
+      head_html += context;
+      console.log("context = ", context);
+
+      current_value.type = 'untype';
+    }
+    if (current_value.type === 'embed' && current_value.properties !== undefined) {
+      console.log('embed properties = ', current_value.properties);
+    }
+
+    if (current_value.type === 'toggle' && current_value.properties.title[0][0] === '__HIDE__') {
+      current_value.type = 'untype';
+    }
+  })
 
   console.log('notion page', {
     isDev: config.isDev,
@@ -238,8 +294,8 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
   const socialImage = mapImageUrl(
     getPageProperty<string>('Social Image', block, recordMap) ||
-      (block as PageBlock).format?.page_cover ||
-      config.defaultPageCover,
+    (block as PageBlock).format?.page_cover ||
+    config.defaultPageCover,
     block
   )
 
@@ -247,6 +303,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
     getPageProperty<string>('Description', block, recordMap) ||
     config.description
 
+  console.log("result = ", head_html);
   return (
     <>
       <PageHead
@@ -258,8 +315,8 @@ export const NotionPage: React.FC<types.PageProps> = ({
         url={canonicalPageUrl}
       />
 
-      {isLiteMode && <BodyClassName className='notion-lite' />}
-      {isDarkMode && <BodyClassName className='dark-mode' />}
+      {isLiteMode && <BodyClassName className='notion-lite'/>}
+      {isDarkMode && <BodyClassName className='dark-mode'/>}
 
       <NotionRenderer
         bodyClassName={cs(
@@ -285,8 +342,10 @@ export const NotionPage: React.FC<types.PageProps> = ({
         pageAside={pageAside}
         footer={footer}
       />
-
-      <GitHubShareButton />
+      
+      <OuterEmbed
+        html_string={head_html}
+      />
     </>
   )
 }
