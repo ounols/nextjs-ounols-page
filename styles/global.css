@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Fredoka+One&family=Hahmlet:wght@900&display=swap');
+
+
 * {
   box-sizing: border-box;
 }
@@ -14,8 +17,8 @@ html {
 }
 
 body {
-  --notion-font: -apple-system, BlinkMacSystemFont, Song Myung, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  --notion-font: -apple-system, BlinkMacSystemFont,'Gowun Dodum', 'Segoe UI', Helvetica,
+  'Apple Color Emoji', Arial, sans-serif, 'Segoe UI Emoji', 'Segoe UI Symbol';
   font-family: var(--notion-font);
   overflow-x: hidden;
 }
