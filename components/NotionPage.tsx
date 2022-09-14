@@ -29,7 +29,7 @@ import {PageHead} from './PageHead'
 import {PageAside} from './PageAside'
 import {Footer} from './Footer'
 import {NotionPageHeader} from './NotionPageHeader'
-import {GitHubShareButton} from './GitHubShareButton'
+// import {GitHubShareButton} from './GitHubShareButton'
 import {OuterEmbed} from './OuterEmbed'
 
 import styles from './styles.module.css'
@@ -217,8 +217,8 @@ export const NotionPage: React.FC<types.PageProps> = ({
   }
 
   const title = getBlockTitle(block, recordMap) || site.name
-  var head_html = "";
-  let code: React.ReactChild = (
+  let head_html = "";
+  const code: React.ReactChild = (
     <NotionRenderer
       recordMap={recordMap}
       components={{
