@@ -264,6 +264,15 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
       current_value.type = 'untype';
     }
+
+    if (current_value.type === 'code' && current_value.properties.language[0][0] === 'C++') {
+      console.log('converting...', current_value.properties.language[0]);
+
+      current_value.properties.language[0][0] = 'cpp';
+
+      console.log('(after)', id, '=', current_value.properties.language[0][0]);
+    }
+
     if (current_value.type === 'embed' && current_value.properties !== undefined) {
       console.log('embed properties = ', current_value.properties);
     }
