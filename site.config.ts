@@ -6,7 +6,7 @@ export default siteConfig({
 
   // if you want to restrict pages to a single notion workspace (optional)
   // (this should be a Notion ID; see the docs for how to extract this)
-  rootNotionSpaceId: null,
+  rootNotionSpaceId: 'ounols',
 
   // basic site info (required)
   name: 'ounols',
@@ -49,6 +49,7 @@ export default siteConfig({
     '/ko': '28b6b04bbda740cc9f279b2874cdf46f',
     '/CSEngine-en': '0ac013d495534455a7742ee7928742db',
     '/Angpang-en': '520e130e40d340b8a9f856abced64f3d',
+    '/remix': '99b7939d3381482c8242efbae4a2f1df',
   },
 
   // whether to use the default notion navigation style or a custom one with links to
