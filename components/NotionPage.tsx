@@ -226,10 +226,10 @@ export const NotionPage: React.FC<types.PageProps> = ({
   )
 
   Object.entries(code.props.recordMap.block).map(([id, value]) => {
-    console.log(id, '=', value)
+    console.log(id, '=')
 
     let current_value: any = (value as any);
-    console.log('(before)', id, '=', current_value)
+    // console.log('(before)', id, '=', current_value)
     if (current_value.role === 'none') return;
     if (current_value.value != undefined) {
       current_value = current_value.value;
@@ -252,7 +252,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
       current_value.properties.title.unshift(['data:text/html;charset=utf-8,']);
       current_value.properties = {source: [[current_value.properties.title.join('')]]};
 
-      console.log('(after)', id, '=', current_value)
+      // console.log('(after)', id, '=', current_value)
     }
 
     if (current_value.type === 'code' && current_value.properties.language[0][0] === 'Visual Basic') {
@@ -260,7 +260,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
       const context = current_value.properties.title.join();
       head_html += context;
-      console.log("context = ", context);
+      // console.log("context = ", context);
 
       current_value.type = 'untype';
     }
@@ -270,11 +270,11 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
       current_value.properties.language[0][0] = 'cpp';
 
-      console.log('(after)', id, '=', current_value.properties.language[0][0]);
+      // console.log('(after)', id, '=', current_value.properties.language[0][0]);
     }
 
     if (current_value.type === 'embed' && current_value.properties !== undefined) {
-      console.log('embed properties = ', current_value.properties);
+      // console.log('embed properties = ', current_value.properties);
     }
 
     if (current_value.type === 'toggle' && current_value.properties.title[0][0] === '__HIDE__') {
@@ -282,13 +282,13 @@ export const NotionPage: React.FC<types.PageProps> = ({
     }
   })
 
-  console.log('notion page', {
-    isDev: config.isDev,
-    title,
-    pageId,
-    rootNotionPageId: site.rootNotionPageId,
-    recordMap
-  })
+  // console.log('notion page', {
+  //   isDev: config.isDev,
+  //   title,
+  //   pageId,
+  //   rootNotionPageId: site.rootNotionPageId,
+  //   recordMap
+  // })
 
   if (!config.isServer) {
     // add important objects to the window global for easy debugging
@@ -312,7 +312,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
     getPageProperty<string>('Description', block, recordMap) ||
     config.description
 
-  console.log("result = ", head_html);
+  // console.log("result = ", head_html);
   return (
     <>
       <PageHead
