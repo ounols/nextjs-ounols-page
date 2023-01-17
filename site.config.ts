@@ -50,7 +50,7 @@ export default siteConfig({
     '/CSEngine-en': '0ac013d495534455a7742ee7928742db',
     '/Angpang-en': '520e130e40d340b8a9f856abced64f3d',
     '/remix': '99b7939d3381482c8242efbae4a2f1df',
-    '/blog': '7a5a0591905c4779812304204fea6d3c'
+    '/blog': '71b8df25b9814812acef1b2f915dff04'
   },
 
   // whether to use the default notion navigation style or a custom one with links to
@@ -64,7 +64,7 @@ export default siteConfig({
     },
     {
       title: 'Blog',
-      pageId: '7a5a0591905c4779812304204fea6d3c'
+      pageId: '71b8df25b9814812acef1b2f915dff04'
     }
   ]
 })
