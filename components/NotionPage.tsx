@@ -242,13 +242,23 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
 
       current_value.type = 'embed';
-      const embed_size = current_value.properties.caption[0][0].split(',');
-      Object.assign(current_value, {
-        format: {
-          block_width: Number(embed_size[0]),
-          block_height: Number(embed_size[1]),
-        }
-      })
+      try {
+        const embed_size = current_value.properties.caption[0][0].split(',');
+        Object.assign(current_value, {
+          format: {
+            block_width: (embed_size[0]),
+            block_height: (embed_size[1]),
+          }
+        })
+      } catch (error) {
+        Object.assign(current_value, {
+          format: {
+            block_width: '100%',
+            block_height: '300px',
+          }
+        })
+      }
+      
       current_value.properties.title.unshift(['data:text/html;charset=utf-8,']);
       current_value.properties = {source: [[current_value.properties.title.join('')]]};
 
