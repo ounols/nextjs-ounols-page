@@ -334,6 +334,8 @@ export const NotionPage: React.FC<types.PageProps> = ({
         url={canonicalPageUrl}
       />
 
+      <meta name="naver-site-verification" content="f8af2e08972a74eb2d60b8070175c2ca22cf69ea" />
+
       {isLiteMode && <BodyClassName className='notion-lite'/>}
       {isDarkMode && <BodyClassName className='light-mode'/>}
 
