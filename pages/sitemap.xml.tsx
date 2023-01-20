@@ -32,24 +32,36 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
 const createSitemap = (siteMap: SiteMap) =>
   `<?xml version="1.0" encoding="UTF-8"?>
-  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
       <loc>${host}</loc>
+      <lastmod>${new Date().toISOString()}</lastmod>
+      <priority>1.00</priority>
     </url>
 
     <url>
       <loc>${host}/</loc>
+      <lastmod>${new Date().toISOString()}</lastmod>
+      <priority>1.00</priority>
     </url>
 
     ${Object.keys(siteMap.canonicalPageMap)
       .map((canonicalPagePath) =>
         `
-          <url>
-            <loc>${host}/${canonicalPagePath}</loc>
-          </url>
+        <url>
+          <loc>${host}/${canonicalPagePath}</loc>
+          <lastmod>${new Date().toISOString()}</lastmod>
+          <priority>0.80</priority>
+        </url>
+
         `.trim()
       )
       .join('')}
+
   </urlset>
 `
 
