@@ -1,38 +1,33 @@
 import * as React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
 import cs from 'classnames'
-import {useRouter} from 'next/router'
-import {useSearchParam} from 'react-use'
+import { PageBlock } from 'notion-types'
+import { formatDate, getBlockTitle, getPageProperty } from 'notion-utils'
 import BodyClassName from 'react-body-classname'
-import {PageBlock} from 'notion-types'
-
+import { NotionRenderer } from 'react-notion-x'
 import TweetEmbed from 'react-tweet-embed'
+import { useSearchParam } from 'react-use'
 
-// core notion renderer
-import {NotionRenderer} from 'react-notion-x'
+import * as config from '@/lib/config'
+import * as types from '@/lib/types'
+import { mapImageUrl } from '@/lib/map-image-url'
+import { getCanonicalPageUrl, mapPageUrl } from '@/lib/map-page-url'
+import { searchNotion } from '@/lib/search-notion'
+import { useDarkMode } from '@/lib/use-dark-mode'
 
-// utils
-import {getBlockTitle, getPageProperty, formatDate} from 'notion-utils'
-import {mapPageUrl, getCanonicalPageUrl} from 'lib/map-page-url'
-import {mapImageUrl} from 'lib/map-image-url'
-import {searchNotion} from 'lib/search-notion'
-import {useDarkMode} from 'lib/use-dark-mode'
-import * as types from 'lib/types'
-import * as config from 'lib/config'
-
-// components
-import {Loading} from './Loading'
-import {Page404} from './Page404'
-import {PageHead} from './PageHead'
-import {PageAside} from './PageAside'
-import {Footer} from './Footer'
-import {NotionPageHeader} from './NotionPageHeader'
-// import {GitHubShareButton} from './GitHubShareButton'
-import {OuterEmbed} from './OuterEmbed'
-
+import { Footer } from './Footer'
+import { GitHubShareButton } from './GitHubShareButton'
+import { Loading } from './Loading'
+import { NotionPageHeader } from './NotionPageHeader'
+import { Page404 } from './Page404'
+import { PageAside } from './PageAside'
+import { PageHead } from './PageHead'
 import styles from './styles.module.css'
+import {OuterEmbed} from './OuterEmbed'
 
 // -----------------------------------------------------------------------------
 // dynamic imports for optional components
@@ -128,7 +123,7 @@ const propertyDateValue = (
     const publishDate = data?.[0]?.[1]?.[0]?.[1]?.start_date
 
     if (publishDate) {
-      return `Published ${formatDate(publishDate, {
+      return `${formatDate(publishDate, {
         month: 'long'
       })}`
     }
