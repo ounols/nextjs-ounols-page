@@ -19,6 +19,7 @@ export default withBundleAnalyzer({
     ],
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,
+    unoptimized: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;"
   },
 
@@ -38,3 +39,9 @@ export default withBundleAnalyzer({
   // See https://react-tweet.vercel.app/next#troubleshooting
   transpilePackages: ['react-tweet']
 })
+
+module.exports = {
+  images: {
+    unoptimized: true,
+  },
+};
