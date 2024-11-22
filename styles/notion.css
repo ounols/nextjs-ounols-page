@@ -7,9 +7,11 @@
  * places to add some flare.
  */
 
-.notion {
+ .notion {
   --notion-max-width: 720px;
   --notion-header-height: 54px;
+  font-family: -apple-system, BlinkMacSystemFont,'Gowun Dodum', 'Segoe UI', Helvetica,
+    'Apple Color Emoji', Arial, sans-serif, 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
 .notion-frame {
@@ -131,6 +133,7 @@
 .notion-h2,
 .notion-h3 {
   margin-bottom: 0.25em;
+  font-family: 'Fredoka One', 'Hahmlet', cursive;
 }
 
 .notion-callout {
@@ -169,6 +172,7 @@
 .notion-title {
   display: block;
   text-align: center;
+  font-family: 'Fredoka One', 'Hahmlet', cursive;
 }
 
 .notion-collection-row {

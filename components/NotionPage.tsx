@@ -30,6 +30,7 @@ import { Page404 } from './Page404'
 import { PageAside } from './PageAside'
 import { PageHead } from './PageHead'
 import styles from './styles.module.css'
+import { DiscussionEmbed } from 'disqus-react';
 
 // -----------------------------------------------------------------------------
 // dynamic imports for optional components
@@ -252,6 +253,15 @@ export function NotionPage({
     getPageProperty<string>('Description', block, recordMap) ||
     config.description
 
+  
+    const disqus = <DiscussionEmbed
+    shortname={"ounols"}
+    config={ {
+      url: (canonicalPageUrl ? canonicalPageUrl : ""),
+      title: title
+    } }
+  />
+
   return (
     <>
       <PageHead
@@ -288,10 +298,9 @@ export function NotionPage({
         mapImageUrl={mapImageUrl}
         searchNotion={config.isSearchEnabled ? searchNotion : null}
         pageAside={pageAside}
+        pageFooter={pageId === site.rootNotionPageId ? null : disqus}
         footer={footer}
       />
-
-      <GitHubShareButton />
     </>
   )
 }

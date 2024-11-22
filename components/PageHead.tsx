@@ -99,6 +99,7 @@ export function PageHead({
       <meta property='og:title' content={title} />
       <meta name='twitter:title' content={title} />
       <title>{title}</title>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7885608228730680" crossOrigin="anonymous"></script>
     </Head>
   )
 }

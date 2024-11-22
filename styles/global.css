@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Fredoka+One&family=Hahmlet:wght@900&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -59,4 +61,12 @@ body {
 
 ::-webkit-scrollbar-track {           
     background-color: var(--bg-color);
+}
+
+#disqus_thread {
+  width:  100%;
+}
+
+#disqus_recommendations {
+  width: 100%;
 }
